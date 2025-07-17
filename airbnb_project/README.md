@@ -2,6 +2,9 @@
 
 This project explores the relationship between Airbnb listing features and yearly revenue using real-world data from 2016. By examining how factors such as beedrooms, bathrooms, and review scores impact a listing's yearly revenue, this analysis aims to give us a starting point for considerations when purchasing a property to rent out with Airbnb.
 
+**Data Source**
+
+https://www.insideairbnb.com/get-the-data/
 
 **Project Goals**
 
@@ -73,6 +76,23 @@ While some findings, such as the positive impact of bedrooms on revenue, may see
   **Further Research**
 - The R-squared value of 0.311 suggests that our model explains about 31.1% of the variance in yearly revenue. While this represents a moderate fit, it also indicates that a significant portion of revenue variation remains unexplained. Future analysis could explore additional variables such as location, availability, seasonality, or amenities to improve predictive power.
 
+- We could filter the data further to exclude listings below a minimun number of stays or listings theat are available for a minimum number of days each year. These kinds of considerations could help tighten up our model by removing inactive listings.
+
 - I’d also like to compare this Airbnb data with real estate listings to assess whether the increase in yearly revenue justifies the potentially higher property costs associated with more bedrooms and bathrooms.
+
+
+
+
+
+**Tools Used**
+
+R (tidyverse, ggplot2, broom) - Data Cleaning, Visualzations
+
+Excel - Data Souce 
+
+Tableau
+
+Git/GitHub
+
 
 
