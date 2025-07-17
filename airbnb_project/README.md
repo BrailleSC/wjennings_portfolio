@@ -86,13 +86,13 @@ While some findings, such as the positive impact of bedrooms on revenue, may see
 
 **Tools Used**
 
-R (tidyverse, ggplot2, broom) - Data Cleaning, Visualzations
+R (tidyverse, ggplot2, broom) - Data Cleaning, Write Up Visualzations
 
 Excel - Data Souce 
 
-Tableau
+Tableau - Dashboard Visualizations
 
-Git/GitHub
+Git/GitHub - Project Host
 
 
 
