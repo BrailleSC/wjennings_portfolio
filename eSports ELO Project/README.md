@@ -1,5 +1,6 @@
 # Esports Tournament ELO Tracker
 
+*(Work in progress)*
 End-to-end pipeline for pulling **start.gg** tournament data, loading it into PostgreSQL, and computing **ELO** ratings based on matches throughout the top 6 tournaments in 2024 with a transparent, auditable ledger.
 
 ## Features
@@ -19,10 +20,7 @@ End-to-end pipeline for pulling **start.gg** tournament data, loading it into Po
 │  └─ ELO_plpgsql.sql          # ELO function + example run
 ├─ examples/
 │  └─ test.py                  # Minimal GraphQL test script (single set)
-├─ docs/
-│  └─ SETUP.md                 # One-time setup and run instructions
-├─ .env.example                # Required environment variables (no secrets)
-├─ requirements.txt
+├─ .env.example                # Required environment variables
 ├─ .gitignore
 └─ LICENSE (MIT)
 ```
