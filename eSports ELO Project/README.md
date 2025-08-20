@@ -5,8 +5,8 @@ Welcome to my end-to-end pipeline for pulling tournament data through the start.
 ## Features
 - Pulls tournament + event metadata and set results from start.gg API via GraphQL.
 - Postgres schema (tournaments, events, players, sets).
-- PL/pgSQL ELO function that iterates sets chronologically and writes a player-level ledger in `rating_deltas` while maintaining latest snapshots in `ratings`.
-- Environment-based configuration with `.env`.
+- PL/pgSQL ELO function that iterates sets chronologically and writes a player-level ledger in 'rating_deltas' while maintaining latest snapshots in 'ratings'.
+- Environment-based configuration with .env.
 
 ## Project Structure
 ```
@@ -21,8 +21,8 @@ sql/
   Relational DB Diagram    # PNG of the PGSQL Database Structure
 ```
 
-## Why a row per player in `rating_deltas`?
-To capture **both perspectives** of a set and keep a **full, auditable history** of rating changes. This enables queries like "biggest single-match gain" or "upsets where expected < 40%" and lets you reconstruct ratings at any point, while `ratings` stores only the latest snapshot.
+## Why a row per player in 'rating_deltas'?
+To capture both perspectives of a set and keep a full, auditable history of rating changes. This enables queries like "biggest single-match gain" or "upsets where expected < 40%" and lets you reconstruct ratings at any point, while 'ratings' stores only the latest snapshot.
 
 
 ## Notes
