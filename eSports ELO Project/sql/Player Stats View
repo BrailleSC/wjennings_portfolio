@@ -1,0 +1,30 @@
+-- This view provides easy access to set statistics by player. 
+
+CREATE OR REPLACE VIEW public.player_set_stats
+AS SELECT player_id,
+    name,
+    count(
+        CASE
+            WHEN player_id = winner_id THEN 1
+            ELSE NULL::integer
+        END) AS win_count,
+    count(
+        CASE
+            WHEN player_id = loser_id THEN 1
+            ELSE NULL::integer
+        END) AS loss_count,
+    count(*) AS total_matches
+   FROM ( SELECT s.winner_id,
+            s.loser_id,
+            s.winner_id AS player_id,
+            p.name
+           FROM sets s
+             JOIN players p ON p.user_id = s.winner_id
+        UNION ALL
+         SELECT s.winner_id,
+            s.loser_id,
+            s.loser_id AS player_id,
+            p.name
+           FROM sets s
+             JOIN players p ON p.user_id = s.loser_id) all_sets
+  GROUP BY player_id, name;
