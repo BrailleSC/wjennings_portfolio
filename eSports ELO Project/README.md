@@ -1,6 +1,6 @@
 # Esports Tournament ELO Tracker
 
-Welcome to my end-to-end pipeline for pulling tournament data through the start.gg API, loading it into PostgreSQL, and computing ELO ratings based on matches throughout the 6 bigest "Guilty Gear Strive" tournaments in 2024 with a transparent, auditable ledger for easily queryable data. The project outline will be documented in this readme with a few example queries towards the end.
+(Project is complete, but the portfolio formatting is still under construction!) Welcome to my end-to-end pipeline for pulling tournament data through the start.gg API, loading it into PostgreSQL, and computing ELO ratings based on matches throughout the 6 bigest "Guilty Gear Strive" tournaments in 2024 with a transparent, auditable ledger for easily queryable data. The project outline will be documented in this readme with a few example queries towards the end.
 
 ## Features
 - Python Script pulls tournament + event metadata and set results from start.gg API via GraphQL.
@@ -73,7 +73,6 @@ WHERE rnk &lt;=3</code></pre>
 <tr class="odd"><td>CEOtaku 2024</td><td>RFL | Happyrio</td><td>PAR | Aarondamac</td><td>23.88%</td><td>2</td></tr>
 <tr><td>CEOtaku 2024</td><td>KGT | Jesse</td><td>9Moons | Marvelo</td><td>27.96%</td><td>3</td></tr>
 </table></body></html>
-
 </details>
 
 
