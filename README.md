@@ -11,7 +11,7 @@ My Linkdin: http://www.linkedin.com/in/cody-jennings-421619b6
 
 -- July 2025 -- Airbnb Revenue Analysis (2016 Data) [(./airbnb_analysis_2016)] -- Used Airbnb calendar and listings data to build a linear regression model predicting yearly revenue based on number of bedrooms, bathrooms, and review scores. Includes cleaned visualizations and discussion. 
 
--- July 2025 -- eSports Tournament Match ELO System (Work In Progress) -- So far I have created an ETL Pipeline in Python to webscrape bracket data from the Start.GG API to load into a PostgreSQL relational database built of my own design. Currently working on applying an ELO system that will rank players based on their tournament matches.
+-- July 2025 -- eSports Tournament Match ELO System -- I've created an ETL Pipeline in Python to pull tournament bracket data from the Start.GG API and load it into a PostgreSQL relational database. I then used a plpgSQL function to calculate player skill ratings based on the ELO system, and write to a per match, per player ledger and a most recent ratings snapshot table. Besides ranking players, this allows me to pull up a ton of fun queries like longest winstreaks, hardest bracket paths, biggest upsets, etc.
 
 -- *(More coming soon)* | Stay tuned for upcoming work in SQL, Tableau dashboards, and exploratory data projects.
 
@@ -20,7 +20,8 @@ My Linkdin: http://www.linkedin.com/in/cody-jennings-421619b6
 - R (tidyverse, ggplot2, broom)
 - Excel
 - Tableau
-- Python (AI assissted)
+- PostgreSQL 
+- Python (AI assissted, still learning)
 - Git/GitHub
 
 
