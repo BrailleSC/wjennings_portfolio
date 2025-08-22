@@ -1,10 +1,10 @@
 # Esports Tournament ELO Tracker
 
-Welcome to my end-to-end pipeline for pulling tournament data through the start.gg API, loading it into PostgreSQL, and computing ELO ratings based on matches throughout the 6 bigest tournaments in 2024 with a transparent, auditable ledger for easily queryable statistics. The project outline will be documented in this readme with a few example queries towards the end.
+Welcome to my end-to-end pipeline for pulling tournament data through the start.gg API, loading it into PostgreSQL, and computing ELO ratings based on matches throughout the 6 bigest "Guilty Gear Strive" tournaments in 2024 with a transparent, auditable ledger for easily queryable data. The project outline will be documented in this readme with a few example queries towards the end.
 
 ## Features
-- Pulls tournament + event metadata and set results from start.gg API via GraphQL.
-- Postgres schema (tournaments, events, players, sets).
+- Python Script pulls tournament + event metadata and set results from start.gg API via GraphQL.
+- Postgres schema (tournaments, events, players, sets, etc...).
 - PL/pgSQL ELO function that iterates sets chronologically and writes a player-level ledger in 'rating_deltas' while maintaining latest snapshots in 'ratings'.
 - Environment-based configuration with .env.
 
@@ -26,7 +26,28 @@ This database now alows me to query a ton of fun statisics and compare ELO ratin
 
 <details>
   <summary><b>Top 3 Biggest Upsets Per Tournament</b></summary>
-  This query highlights the top three biggest upsets per event by ranking winners who had the lowest pre-match win probability (based on ELO). It filters to the latest rating run, joins back to player and tournament names, and formats the expected probability as a percentage for readability.
+  <br>
+  The biggest upsets are determined by ranking winners who had the lowest pre-match win probability (based on ELO difference). This query filters to the latest rating run, joins back to player and tournament names, and formats the expected probability as a percentage for readability.
+  <br><br>
+  <details>
+  <summary><b>SQL Code</b></summary>
+<pre><code class="language-sql">WITH ut AS (SELECT event_id, 
+                rd.player_id, RD.OPPONENT_ID,
+                RD.EXPECTED,
+                    row_number() OVER (PARTITION BY RD.EVENT_ID
+                    ORDER BY expected ASC, RD.COMPLETED_AT DESC) AS rnk
+                    FROM RATING_DELTAS RD 
+                    WHERE score = 1
+                    )
+SELECT  t.name AS Tournament, p.name AS Winner, lp.name AS Loser,
+round(ut.EXPECTED::numeric*100, 2) || '%' AS Win_Probability, rnk AS rank
+FROM ut JOIN PLAYERS P ON ut.PLAYER_ID = p.USER_ID 
+JOIN events e ON ut.EVENT_ID = e.ID 
+JOIN TOURNAMENTS T ON e.TOURNAMENT_ID  = t.id
+JOIN players lp ON ut.OPPONENT_ID = Lp.USER_ID 
+WHERE rnk &lt;=3</code></pre>
+</details>
+    
 <!DOCTYPE html>
 <html>
 <head>
