@@ -1,4 +1,4 @@
--- This view provides easy access to set statistics by player. 
+-- This view provides easy access to set statistics by player across all tournaments. 
 
 CREATE OR REPLACE VIEW public.player_set_stats
 AS SELECT player_id,
