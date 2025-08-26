@@ -27,7 +27,7 @@ This database now alows me to query a ton of fun statisics and compare ELO ratin
 <details>
   <summary><b>Top 3 Biggest Upsets Per Tournament</b></summary>
   <br>
-  The biggest upsets are determined by ranking winners who had the lowest pre-match win probability (based on ELO difference). This query filters to the latest rating run, joins back to player and tournament names, and formats the expected probability as a percentage for readability.
+  The biggest upsets are determined by ranking winners who had the lowest pre-match win probability (based on ELO difference). This query filters to the latest rating run, joins back to player and tournament names, and formats the expected probability as a percentage for readability. Tournaments are ordered chronologically, which is why we see consistently dropping expected win percentages, with more data the variance in player ratings will grow. 
   <br><br>
   <details>
   <summary><b>SQL Code</b></summary>
