@@ -23,10 +23,37 @@ sql/
 
 ## Outcome and Examples
 This database now alows me to query a ton of fun statisics and compare ELO ratings over time. Here's a few examples and their code.
+  
+ <br>
+<details>
+  <summary><b>Top 10 Players by Rating</b></summary>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left;">Player</th>
+        <th style="text-align:right;">Rating</th>
+        <th style="text-align:right;">Wins</th>
+        <th style="text-align:right;">Losses</th>
+        <th style="text-align:right;">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Fly | Nitro</td><td style="text-align:right;">1348.0</td><td style="text-align:right;">39</td><td style="text-align:right;">8</td><td style="text-align:right;">47</td></tr>
+      <tr><td>M.RAGE | UMISHO</td><td style="text-align:right;">1337.0</td><td style="text-align:right;">45</td><td style="text-align:right;">7</td><td style="text-align:right;">52</td></tr>
+      <tr><td>RFL | RedIAmNot</td><td style="text-align:right;">1303.0</td><td style="text-align:right;">38</td><td style="text-align:right;">10</td><td style="text-align:right;">48</td></tr>
+      <tr><td>bc | Jonathan Tene</td><td style="text-align:right;">1299.0</td><td style="text-align:right;">33</td><td style="text-align:right;">8</td><td style="text-align:right;">41</td></tr>
+      <tr><td>Razzo</td><td style="text-align:right;">1285.0</td><td style="text-align:right;">39</td><td style="text-align:right;">12</td><td style="text-align:right;">51</td></tr>
+      <tr><td>FLY | TempestNYC</td><td style="text-align:right;">1285.0</td><td style="text-align:right;">34</td><td style="text-align:right;">6</td><td style="text-align:right;">40</td></tr>
+      <tr><td>TSM | Leffen</td><td style="text-align:right;">1281.0</td><td style="text-align:right;">32</td><td style="text-align:right;">8</td><td style="text-align:right;">40</td></tr>
+      <tr><td>PAR | Zando</td><td style="text-align:right;">1279.0</td><td style="text-align:right;">24</td><td style="text-align:right;">4</td><td style="text-align:right;">28</td></tr>
+      <tr><td>9Moons | Marvelo</td><td style="text-align:right;">1253.0</td><td style="text-align:right;">36</td><td style="text-align:right;">12</td><td style="text-align:right;">48</td></tr>
+      <tr><td>Twis | Slash</td><td style="text-align:right;">1241.0</td><td style="text-align:right;">27</td><td style="text-align:right;">6</td><td style="text-align:right;">33</td></tr>
+    </tbody>
+  </table>
+</details>
 
 <details>
-  <summary><b>Top 3 Biggest Upsets Per Tournament</b></summary>
-  <br>
+  <summary><b>Top 3 Upsets per Tournament</b></summary>
   The biggest upsets are determined by ranking winners who had the lowest pre-match win probability (based on ELO difference). This query filters to the latest rating run, joins back to player and tournament names, and formats the expected probability as a percentage for readability. Tournaments are ordered chronologically, which is why we see consistently dropping expected win percentages, with more data the variance in player ratings will grow. 
   <br><br>
   <details>
@@ -75,7 +102,60 @@ WHERE rnk &lt;=3</code></pre>
 </table></body></html>
 </details>
 
+<details>
+  <summary><b>Top 3 Biggest Losers Runs per Tournament</b></summary>
+  Each tournament being double elimination means that you have to lose twice to be knocked out of the tournament, you remain in the winners bracket until you lose, at which point you move to the losers bracket. The longest losers runs measures how many matches a player won after having been sent to the losers bracket. 
+  <br><br>
+<details>
+  <summary><b>SQL Code</b></summary>
+  <pre><code class="language-sql">
+--Longest losers bracket runs per tournament
+-- count of how many occ where round like 'loser'
+WITH lr AS (SELECT s.winner_id, EVENT_id, count(*) AS count,
+			row_number() OVER(PARTITION BY event_id ORDER BY count(*) DESC) AS rnk
+			FROM sets s
+			WHERE round ILIKE '%loser%'
+			GROUP BY s.winner_id, event_id
+)
+SELECT  t.name, p.name, count AS losers_bracket_wins, rnk AS rank
+FROM lr JOIN PLAYERS P ON lr.winner_id = p.USER_ID 
+JOIN events e ON lr.EVENT_ID = e.ID 
+JOIN TOURNAMENTS T ON e.TOURNAMENT_ID  = t.id
+WHERE rnk <=3
+</pre></code>
 
+</details>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left;">Tournament</th>
+        <th style="text-align:left;">Player</th>
+        <th style="text-align:right;">Set Wins</th>
+        <th style="text-align:right;">Placement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Frosty Faustings XVI 2024</td><td>9Moons | Rat</td><td style="text-align:right;">9</td><td style="text-align:right;">1</td></tr>
+      <tr><td>Frosty Faustings XVI 2024</td><td>bc | Lord Knight</td><td style="text-align:right;">6</td><td style="text-align:right;">2</td></tr>
+      <tr><td>Frosty Faustings XVI 2024</td><td>bc | Jonathan Tene</td><td style="text-align:right;">6</td><td style="text-align:right;">3</td></tr>
+      <tr><td>CEO 2024</td><td>RFL | BM | Lucien</td><td style="text-align:right;">5</td><td style="text-align:right;">1</td></tr>
+      <tr><td>CEO 2024</td><td>Bento</td><td style="text-align:right;">5</td><td style="text-align:right;">2</td></tr>
+      <tr><td>CEO 2024</td><td>UNF | Kungfupanda</td><td style="text-align:right;">5</td><td style="text-align:right;">3</td></tr>
+      <tr><td>COMBO BREAKER 2024</td><td>Lunaa</td><td style="text-align:right;">6</td><td style="text-align:right;">1</td></tr>
+      <tr><td>COMBO BREAKER 2024</td><td>Please</td><td style="text-align:right;">5</td><td style="text-align:right;">2</td></tr>
+      <tr><td>COMBO BREAKER 2024</td><td>sea_otter_h</td><td style="text-align:right;">5</td><td style="text-align:right;">3</td></tr>
+      <tr><td>EVO 2024</td><td>Mr. Quick</td><td style="text-align:right;">8</td><td style="text-align:right;">1</td></tr>
+      <tr><td>EVO 2024</td><td>Trailblazer</td><td style="text-align:right;">7</td><td style="text-align:right;">2</td></tr>
+      <tr><td>EVO 2024</td><td>PAR | Zando</td><td style="text-align:right;">7</td><td style="text-align:right;">3</td></tr>
+      <tr><td>East Coast Throwdown 2024</td><td>arms</td><td style="text-align:right;">5</td><td style="text-align:right;">1</td></tr>
+      <tr><td>East Coast Throwdown 2024</td><td>NH | Akeno</td><td style="text-align:right;">5</td><td style="text-align:right;">2</td></tr>
+      <tr><td>East Coast Throwdown 2024</td><td>Nepped Hazama</td><td style="text-align:right;">4</td><td style="text-align:right;">3</td></tr>
+      <tr><td>CEOtaku 2024</td><td>scambolini_</td><td style="text-align:right;">8</td><td style="text-align:right;">1</td></tr>
+      <tr><td>CEOtaku 2024</td><td>9Moons | Marvelo</td><td style="text-align:right;">6</td><td style="text-align:right;">2</td></tr>
+      <tr><td>CEOtaku 2024</td><td>FredBurst | haruko</td><td style="text-align:right;">5</td><td style="text-align:right;">3</td></tr>
+    </tbody>
+  </table>
+</details>
 
 
 ## Why a row per player in 'rating_deltas'?
