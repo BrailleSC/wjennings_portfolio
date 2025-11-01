@@ -25,7 +25,7 @@ To further explore trends across geographic areas and listing features, an inter
 
 ![Revenue by Bedrooms](Charts/revenue_bedrooms.png)
 
-Revenue generally increases with more bedrooms, with a notable jump in median earnings around 5-bedroom listings. Outliers with very high revenue exist in each category, likely due to luxury or frequently booked properties.
+Revenue generally increases with more bedrooms, with the exception of 3 and 4 bedroom houses performing similarly and with a notable jump in median earnings around 5-bedroom listings. Outliers with very high revenue exist in each category, likely due to luxury or frequently booked properties.
 
 ---
 
